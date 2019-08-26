@@ -1,21 +1,21 @@
-import Footer from './src/components/footer';
-import Header from './src/components/header';
-import Search from './src/components/search';
+import Footer from './components/footer';
+import Header from './components/header';
+import Images from './components/images';
 import './style.css';
 
-window.addEventListener('load', function() {
+// CS50
+window.addEventListener('load', () => {
+
+    
     const footer = new Footer('footer');
     const header = new Header('header');
-    const search = new Search('main');
 
     header.render();
-    search.render()
+    // search.render()
     footer.render({ copyright: 'passed value - Copyright 2018' });
-})
 
-
-// CS50
-$(document).ready(() => {
+    const images = new Images();
+    
 
     // const toggleOrder = new ToggleOrder({
     //     rootNode: $('[name="toggle-order-placeholder"]'),
@@ -25,13 +25,13 @@ $(document).ready(() => {
     //     }
     // });
 
-    const order = new Order({
-        rootNode: $('[name="order-placeholder"]'),
-        handlers: {
-            onHideOrder: () => { toggleOrder.showCreateOrder(); },
-            onShowOrder: () => { toggleOrder.showCloseOrder(); }
-        }
-    });
+    // const order = new Order({
+    //     rootNode: $('[name="order-placeholder"]'),
+    //     handlers: {
+    //         onHideOrder: () => { toggleOrder.showCreateOrder(); },
+    //         onShowOrder: () => { toggleOrder.showCloseOrder(); }
+    //     }
+    // });
 
     // const tableSelect = new TableSelect({
     //     rootNode: $('[name="table-select-placeholder"]'),
