@@ -3,15 +3,17 @@ import template from './template.html';
 import './style.css';
 
 export default class Footer {
-  constructor(dataParent){
+  constructor(dataParent) {
     this.dataParent = dataParent;
     this.defaultData = {
-      copyright: 'copyright'
-    }
+      copyright: 'copyright',
+    };
   }
 
   render(data = this.defaultData) {
     const output = mustache.render(template, data);
-    document.querySelector(`[data-parent = ${this.dataParent}]`).insertAdjacentHTML('beforeend', output);
+    document
+        .querySelector(`[data-parent = ${this.dataParent}]`)
+        .insertAdjacentHTML('beforeend', output);
   }
 }

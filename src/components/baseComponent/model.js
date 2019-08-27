@@ -1,34 +1,21 @@
+import mustache from 'mustache';
+
 export default class Model {
-  // PRIVAT METHODS
-  _fireCallback(methodName, payload) {
-    if (Array.isArray(this.callbacks[methodName])) {
-      this.callbacks[methodName].forEach(callback => {
-        try {
-          callback(payload);
-        } catch (e) { console.error(e); } // should be replaced with a real error handler
-      });
-    }
+  constructor({parentElement, template}) {
+    this.template = template;
+    this.parentElement = parentElement;
   }
 
-  // PUBLIC METHODS
-  addListener(functionName, handler) {
-    if (functionName in this.callbacks) {
-      this.callbacks[functionName].push(handler);
-    } else {
-      this.callbacks[functionName] = [handler];
-    }
+  render(data) {
+    const placeholder = document.createElement('div');
+    placeholder.insertAdjacentHTML(
+        'afterbegin',
+        mustache.render(this.template, data)
+    );
+    this.node = placeholder.firstElementChild;
+
+    document
+        .querySelector(`[data-parent = ${this.parentElement}]`)
+        .insertAdjacentElement('beforeend', this.node);
   }
-
-  removeComponent() {
-    this._fireCallback('onRemoveComponent', {});
-  }
-
-  // GETTERS & SETTERS
-  // get renderData() {
-  //   return this._renderData;
-  // }
-
-  // set renderData(renderData) {
-  //   this._renderData = { ...this.renderData, ...renderData };
-  // }
 }

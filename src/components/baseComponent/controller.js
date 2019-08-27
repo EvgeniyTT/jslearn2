@@ -1,28 +1,45 @@
 export default class Controller {
+  constructor(callbacks = {}) {
+    this.callbacks = {};
+    this.addCallbacks(callbacks);
+  }
+
   // PRIVAT METHODS
   _cleanup() {
     this.selectors = null;
-    if (this.renderedTemplate) this.renderedTemplate.remove();
+    if (this.model.node) this.model.node.remove();
+  }
+
+  _fireCallback(methodName, payload) {
+    if (Array.isArray(this.callbacks[methodName])) {
+      this.callbacks[methodName].forEach((callback) => {
+        try {
+          callback(payload);
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    }
   }
 
   _initListeners() {}
 
-  _renderTemplate(renderData, options = {}) {
-    this.renderedTemplate = $(Mustache.render(this.template, renderData));
-    if (options.isAppend) {
-      this.rootNode.append(this.renderedTemplate);
-    } else if (options.isPrepend) {
-      this.rootNode.prepend(this.renderedTemplate);
-    } else if (options.insertAfter) {
-      this.renderedTemplate.insertAfter(options.insertAfter);
+  // PUBLIC METHODS
+  addCallback(callbackName, handler) {
+    if (callbackName in this.callbacks) {
+      this.callbacks[callbackName].push(handler);
     } else {
-      this.rootNode.html(this.renderedTemplate);
+      this.callbacks[callbackName] = [handler];
     }
   }
 
-  // PUBLIC METHODS
-  render(renderData, options) {
-    this._renderTemplate(renderData, options);
-    this._initListeners();
+  addCallbacks(callbacks) {
+    Object.keys(callbacks).forEach((event) => {
+      this.addCallback(event, callbacks[event]);
+    });
+  }
+
+  removeComponent() {
+    this._fireCallback('onRemoveComponent', {});
   }
 }

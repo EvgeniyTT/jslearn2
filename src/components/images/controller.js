@@ -1,5 +1,7 @@
+import Controller from '../baseComponent/controller';
 
-  // render(data = this.defaultData) {
-  //   const output = mustache.render(template, data);
-  //   document.querySelector(`[data-parent = ${this.dataParent}]`).insertAdjacentHTML('beforeend', output);
-  // }
+export default class ImageController extends Controller {
+  constructor({model, callbacks}) {
+    super(callbacks);
+  }
+};

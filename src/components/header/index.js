@@ -3,15 +3,17 @@ import template from './template.html';
 import './style.css';
 
 export default class Header {
-  constructor(dataParent){
+  constructor(dataParent) {
     this.dataParent = dataParent;
     this.defaultData = {
-      title: 'Title'
-    }
+      title: 'Title',
+    };
   }
 
   render(data = this.defaultData) {
     const output = mustache.render(template, data);
-    document.querySelector(`[data-parent = ${this.dataParent}]`).insertAdjacentHTML('beforeend', output);
+    document
+        .querySelector(`[data-parent = ${this.dataParent}]`)
+        .insertAdjacentHTML('beforeend', output);
   }
 }

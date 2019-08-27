@@ -1,5 +1,3 @@
-import mustache from 'mustache';
-
 import Model from '../baseComponent/model';
 import ImagesService from './service';
 import template from './template.html';
@@ -7,27 +5,24 @@ import template from './template.html';
 import Image from '../image';
 
 export default class ImagesModel extends Model {
-  constructor({ parentElement }) {
-    super();
-    const data = { imagesTemplateName: 'images-template' }
+  constructor({parentElement}) {
+    super({parentElement, template});
+    const data = {imagesTemplateName: 'images-template'};
 
-    this.render({ data, parentElement });
+    this.render(data);
 
-    ImagesService.fetchImages().then(images => { 
-      console.log('images: ', images);
-      this.images = images;
-      images.forEach(image => {
+    ImagesService.fetchImages().then((images) => {
+      images.forEach((image) => {
         new Image({
           parentElement: data.imagesTemplateName,
-          data: image
-        })
+          data: image,
+          callbacks: {
+            onImageClick: (message) => {
+              console.log(message);
+            },
+          },
+        });
       });
     });
   }
-
-  render({ data, parentElement }) {
-    const output = mustache.render(template, data);
-    document.querySelector(`[data-parent = ${parentElement}]`).insertAdjacentHTML('beforeend', output);
-  }
-
 }
