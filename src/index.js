@@ -14,7 +14,9 @@ window.addEventListener('load', () => {
     // search.render()
     footer.render({ copyright: 'passed value - Copyright 2018' });
 
-    const images = new Images();
+    const images = new Images({
+        parentElement: 'main'
+    });
     
 
     // const toggleOrder = new ToggleOrder({

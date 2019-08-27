@@ -6,7 +6,7 @@ export default class ImagesService extends Service {
     console.log('I am Image Service');
   }
 
-  fetchImages() {
+  static fetchImages() {
     return fetch('http://localhost:3000/images')
       .then(res => this.checkResponse(res))
       .catch(err => { console.error(err); }) ;
