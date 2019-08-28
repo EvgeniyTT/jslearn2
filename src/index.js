@@ -10,7 +10,11 @@ window.addEventListener('load', () => {
   header.render();
   footer.render({copyright: 'passed value - Copyright 2018'});
 
-  new Images({
-    parentElement: 'main',
-  });
+  document
+      .querySelector('[name="get-images"]')
+      .addEventListener('click', () => {
+        new Images({
+          parentElement: 'main',
+        });
+      });
 });
